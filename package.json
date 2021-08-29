@@ -1,0 +1,20 @@
+{
+  "name": "dash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheus-lima1/dash-vue-laravel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matheus-lima1/dash-vue-laravel/issues"
+  },
+  "homepage": "https://github.com/matheus-lima1/dash-vue-laravel#readme"
+}
