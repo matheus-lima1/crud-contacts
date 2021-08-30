@@ -17,10 +17,12 @@ class HomeController extends Controller
     public function index(){
 
         $contacts = $this->contact->all();
+        $users = \App\User::all();
         
         return response()->json([
-            //'users' => $users,
+            'users' => $users,
             'contacts' => $contacts
         ]);
     }
+
 }
