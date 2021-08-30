@@ -26,4 +26,8 @@ Route::get('/','Api\\HomeController@index');
 
 Route::get('/users','Api\\HomeController@users');
 
+Route::get('/me','Api\\AuthController@me');
+
+Route::post('/register','Api\\AuthController@register');
+
 Route::resource('/contacts','Api\\ContactController');
