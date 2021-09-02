@@ -71,5 +71,7 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
+    'Arcanedev\\Support\\' => array($vendorDir . '/arcanedev/support/src'),
+    'Arcanedev\\LogViewer\\' => array($vendorDir . '/arcanedev/log-viewer/src'),
     'App\\' => array($baseDir . '/app'),
 );

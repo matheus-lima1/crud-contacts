@@ -20,14 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('/login','Api\\AuthController@login');
+Route::get('/me','Api\\AuthController@me');
+Route::post('/register','Api\\AuthController@register');
 
 
 Route::get('/','Api\\HomeController@index');
-
 Route::get('/users','Api\\HomeController@users');
-
-Route::get('/me','Api\\AuthController@me');
-
-Route::post('/register','Api\\AuthController@register');
-
 Route::resource('/contacts','Api\\ContactController');

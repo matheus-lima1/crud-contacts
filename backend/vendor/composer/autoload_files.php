@@ -26,5 +26,9 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     '801c31d8ed748cfa537fa45402288c95' => $vendorDir . '/psy/psysh/src/functions.php',
     'b6ec61354e97f32c0ae683041c78392a' => $vendorDir . '/scrivo/highlight.php/HighlightUtilities/functions.php',
+    'e803af0597ea9e5b518c7d090fb85601' => $vendorDir . '/arcanedev/support/constants.php',
+    '5323a5cb5bb1bab9b2f24566beed262a' => $vendorDir . '/arcanedev/support/helpers.php',
     'ed962a97bd972bc82007176b647d4e36' => $vendorDir . '/facade/ignition/src/helpers.php',
+    'd04e9322f14ab3e66b5b68c6d1e15433' => $vendorDir . '/arcanedev/log-viewer/constants.php',
+    '24be6d98d7c305f36699ba4e34b6df3c' => $vendorDir . '/arcanedev/log-viewer/helpers.php',
 );
