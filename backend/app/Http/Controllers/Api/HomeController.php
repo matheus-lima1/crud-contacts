@@ -18,10 +18,20 @@ class HomeController extends Controller
 
         $contacts = $this->contact->all();
         $users = \App\User::all();
+        $recent = $this->contact->orderBy('created_at','desc')->limit(4)->get();
         
         return response()->json([
             'users' => $users,
-            'contacts' => $contacts
+            'contacts' => $contacts,
+            'recentContacts' => $recent
+        ]);
+    }
+
+    public function users(){
+        $users = \App\User::all();
+        
+        return response()->json([
+            'users' => $users,
         ]);
     }
 
