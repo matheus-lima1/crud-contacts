@@ -6,7 +6,7 @@
       </div>
 
       <div class="info">
-        <p class="name">Matheus Lima</p>
+        <p class="name">{{ this.user.name.split(' ')[0] }}</p>
         <span class="status">online</span>
       </div>
     </div>
@@ -14,8 +14,8 @@
     <div class="menu">
       <ul>
         <li>
-          <router-link :to="{ name: 'index' }"
-            ><i class="fa fa-list icon"></i> Listar</router-link
+          <router-link :to="{ name: 'home' }"
+            ><i class="fa fa-home icon"></i> Home</router-link
           >
         </li>
         <li>
@@ -24,34 +24,79 @@
           >
         </li>
         <li>
-          <router-link :to="{ name: 'edit' }"
-            ><i class="fa fa-edit icon"></i> Editar</router-link
+          <router-link :to="{ name: 'contacts' }"
+            ><i class="fa fa-calendar icon"></i> Contatos</router-link
           >
         </li>
         <li>
-          <router-link :to="{ name: 'remove' }"
-            ><i class="fa fa-trash icon"></i> Remover</router-link
+          <router-link :to="{ name: 'users' }"
+            ><i class="fa fa-users icon"></i> Usuários</router-link
           >
         </li>
+
+        <li>
+          <router-link :to="{ name: 'logs' }"
+            ><i class="fa fa-bug icon"></i> Logs</router-link
+          >
+        </li>
+
+        <li>
+          <router-link :to="{ name: 'login' }"
+            ><i class="fa fa-door-closed icon"></i> Sair</router-link
+          >
+        </li>
+
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+const axios = require("axios");
+import Cookie from "js-cookie";
 export default {
   name: "SideBar",
+
+  data() {
+    return {
+      user: [],
+    };
+  },
   methods: {
     logout() {
       this.$router.push({ name: "login" });
     },
+
+    async me() {
+      let self = this;
+      let token = Cookie.get("_bearer_token");
+      let req = axios({
+        method: "get",
+        url: "http://localhost:8000/api/me/",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      req
+        .then(function (response) {
+          console.log(response.data.user.name);
+          self.user = response.data.user;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+
+  mounted() {
+    this.me();
   },
 };
 </script>
 
 <style lang="scss">
 .sidebar {
-    text-decoration: none;
+  text-decoration: none;
   .sidebar-header {
     width: 100%;
     display: flex;

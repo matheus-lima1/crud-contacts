@@ -3,11 +3,25 @@
     <div class="login bg">
       <div class="content-login">
         <header>
-          <h1>Painel de Controle</h1>
+          <h1>Cadastro de Usuário</h1>
         </header>
 
         <div class="form">
-          <form @submit.prevent="submit">
+          <form @submit.prevent="register">
+            <div class="form-group mb-3">
+              <label for="name">Nome</label>
+              <input
+                v-model="name"
+                type="name"
+                class="form-control mt-2"
+                id="name"
+                name="name"
+                aria-describedby="namelHelp"
+                placeholder="João da Silva"
+                required
+              />
+            </div>
+
             <div class="form-group mb-3">
               <label for="email">E-mail</label>
               <input
@@ -17,10 +31,11 @@
                 id="email"
                 name="email"
                 aria-describedby="emailHelp"
-                placeholder="Enter email"
+                placeholder="joao@silva.com"
                 required
               />
             </div>
+
             <div class="form-group">
               <label for="password">Senha</label>
               <input
@@ -33,9 +48,8 @@
                 required
               />
             </div>
-            <button type="submit" class="btn btn-primary mt-5">Entrar</button>
+            <button type="submit" class="btn btn-primary mt-5" >Registrar</button>
           </form>
-          <button type="button" class="btn btn-secondary mt-2" @click.prevent="register">Registrar</button>
         </div>
       </div>
     </div>
@@ -43,33 +57,25 @@
 </template>
 
 <script>
-import Cookie from "js-cookie";
+
 const axios = require("axios");
 
 export default {
-  name: "LoginComponent",
+  name: "RegisterComponent",
 
   data() {
     return {
       email: "",
       password: "",
-      token: "",
+      name: "",
     };
   },
 
-  created() {
-    Cookie.remove("_bearer_token");
-  },
 
   methods: {
     register() {
-      this.$router.push({
-          name: 'register'
-      });
-    },
-
-    submit() {
       let credentials = {
+        name: this.name,
         email: this.email,
         password: this.password,
       };
@@ -78,21 +84,20 @@ export default {
 
       let test = axios({
         method: "post",
-        url: "http://localhost:8000/api/login",
+        url: "http://localhost:8000/api/register",
         data: credentials,
       });
       test
         .then(function (response) {
-          console.log(response.data.access_token);
-          Cookie.set("_bearer_token", response.data.access_token);
+          console.log(response);
 
           self.$router.push({
-            name: "home",
+            name: "login",
           });
         })
         .catch(function (error) {
           console.log(error);
-          alert('Usuário e/ou senha incorretos');
+          alert("Erro no cadastro!");
         });
     },
   },

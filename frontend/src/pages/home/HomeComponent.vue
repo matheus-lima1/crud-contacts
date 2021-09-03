@@ -8,34 +8,10 @@
 
         <div class="container">
           <div class="row">
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3" v-for="contacts in recentContacts" :key="contacts.id">
               <ListComponent
-                :name="'Matheus Lima'"
-                :number="'(35) 99877-5277'"
-                :icon="'fa-check'"
-              />
-            </div>
-
-            <div class="col-12 col-md-3">
-              <ListComponent
-                :name="'Matheus Rezende'"
-                :number="'(35) 99720-4692'"
-                :icon="'fa-check'"
-              />
-            </div>
-
-            <div class="col-12 col-md-3">
-              <ListComponent
-                :name="'Matheus Brandão'"
-                :number="'(35) 99902-9787'"
-                :icon="'fa-check'"
-              />
-            </div>
-
-            <div class="col-12 col-md-3">
-              <ListComponent
-                :name="'Liminha Math'"
-                :number="'(35) 4002-8922'"
+                :name="contacts.name"
+                :number="contacts.phone"
                 :icon="'fa-check'"
               />
             </div>
@@ -44,7 +20,19 @@
         <div class="container mt-5">
           <div class="row">
             <div class="col-md-6">
-              <IndexComponent :users="users"/>
+              <IndexComponent
+                :data="users"
+                description="Usuário"
+                :columns="['Nome', 'E-mail']"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <IndexComponent
+                :data="contacts"
+                description="Contatos"
+                :columns="['Nome', 'E-mail','Telefone']"
+              />
             </div>
           </div>
         </div>
@@ -60,7 +48,8 @@ import DashComponent from "../dash/DashComponent.vue";
 import ListComponent from "../../components/ListComponent.vue";
 import IndexComponent from "../../components/IndexComponent.vue";
 
-const axios = require('axios').default;
+const axios = require("axios");
+import Cookie from "js-cookie";
 
 export default {
   name: "HomeComponent",
@@ -72,26 +61,43 @@ export default {
 
   data() {
     return {
-      users: []
-    }
+      users: [],
+      contacts: [],
+      token: '',
+      recentContacts: []
+    };
+  },
+
+  mounted() {
+    this.auth();
+    this.getUsers();
   },
 
   methods: {
-    async getUsers(){
-      const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+    auth(){
 
-      if(response.status == 200){
-        this.users = response.data
+      let token = Cookie.get('_bearer_token');
+
+      if(token){
+        this.token = token
       } else {
-        alert('erro')
+        this.$router.push({
+          name: 'login'
+      });
       }
-      
-    }
-  },
+    },
 
-  mounted(){
-    this.getUsers();
-  }
+    async getUsers() {
+      try {
+        let response = await axios.get("http://localhost:8000/api");
+        this.users = response.data.users;
+        this.contacts = response.data.contacts;
+        this.recentContacts = response.data.recentContacts;
+      } catch (error) {
+        alert(error.response);
+      }
+    },
+  },
 };
 </script>
 
