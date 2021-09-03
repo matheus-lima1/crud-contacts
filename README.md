@@ -6,6 +6,7 @@ Ademais, foi implementado um painel de controle de usuários com o JWT como guar
 
 As requisições que consomem a API foram realizadas via axios e os CORS foram habilitados para não haver nenhuma limitação para com o tráfego dos dados.
 
+Para visualizar a exemplificação de ambientação e executação do sistema, acesse o vídeo: https://www.youtube.com/watch?v=7GnHKOj8YDg
 ---
 ### INFORMATIVOS
 
