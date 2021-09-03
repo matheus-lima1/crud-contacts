@@ -7,29 +7,35 @@
         </header>
 
         <div class="form">
-          <form>
+          <form @submit.prevent="submit">
             <div class="form-group mb-3">
-              <label for="exampleInputEmail1">E-mail</label>
+              <label for="email">E-mail</label>
               <input
+                v-model="email"
                 type="email"
                 class="form-control mt-2"
-                id="exampleInputEmail1"
+                id="email"
+                name="email"
                 aria-describedby="emailHelp"
                 placeholder="Enter email"
+                required
               />
-              
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword1">Senha</label>
+              <label for="password">Senha</label>
               <input
+                v-model="password"
                 type="password"
                 class="form-control mt-2"
-                id="exampleInputPassword1"
+                id="password"
+                name="password"
                 placeholder="Password"
+                required
               />
             </div>
-            <button type="submit" class="btn btn-primary mt-5" @click.prevent="login">Entrar</button>
+            <button type="submit" class="btn btn-primary mt-5">Entrar</button>
           </form>
+          <button type="button" class="btn btn-secondary mt-2" @click.prevent="register">Registrar</button>
         </div>
       </div>
     </div>
@@ -37,24 +43,59 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
+const axios = require("axios");
+
 export default {
+  name: "LoginComponent",
 
-    name: 'LoginComponent',
+  data() {
+    return {
+      email: "",
+      password: "",
+      token: "",
+    };
+  },
 
-    data(){
-        return {
+  created() {
+    Cookie.remove("_bearer_token");
+  },
 
-        }
+  methods: {
+    register() {
+      this.$router.push({
+          name: 'register'
+      });
     },
 
-    methods: {
-        login(){
-            this.$router.push({
-                name: 'home'
-            });
-        }
-    }
+    submit() {
+      let credentials = {
+        email: this.email,
+        password: this.password,
+      };
 
+      let self = this;
+
+      let test = axios({
+        method: "post",
+        url: "http://localhost:8000/api/login",
+        data: credentials,
+      });
+      test
+        .then(function (response) {
+          console.log(response.data.access_token);
+          Cookie.set("_bearer_token", response.data.access_token);
+
+          self.$router.push({
+            name: "home",
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert('Usuário e/ou senha incorretos');
+        });
+    },
+  },
 };
 </script>
 
